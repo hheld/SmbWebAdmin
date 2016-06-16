@@ -43,7 +43,14 @@ func changeSmbPwd(data *middleware.Data, w http.ResponseWriter, req *http.Reques
 		return errors.New("The given password does not match the given user. Could not change the password!")
 	}
 
-	return ChangePassword(postData.UserName, postData.NewPassword)
+	err := ChangePassword(postData.UserName, postData.NewPassword)
+
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return err
+	}
+
+	return nil
 }
 
 func setLocalShareFromAPI(data *middleware.Data, w http.ResponseWriter, req *http.Request) error {

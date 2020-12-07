@@ -80,8 +80,10 @@ func token(data *Data, w http.ResponseWriter, req *http.Request) (err error) {
 
 func generateToken(userInfo *user.User) ([]byte, string, error) {
 	token := jwt.New(jwt.SigningMethodHS256)
-	token.Claims["exp"] = time.Now().Add(24 * 7 * time.Hour).Unix()
-	token.Claims["iat"] = time.Now().Unix()
+	claims := make(jwt.MapClaims)
+
+	claims["exp"] = time.Now().Add(24 * 7 * time.Hour).Unix()
+	claims["iat"] = time.Now().Unix()
 
 	id := make([]byte, 32)
 	_, err := rand.Read(id)
@@ -92,9 +94,9 @@ func generateToken(userInfo *user.User) ([]byte, string, error) {
 
 	clientID := hex.EncodeToString(id)
 
-	token.Claims["jti"] = clientID
+	claims["jti"] = clientID
 
-	token.Claims["userInfo"] = map[string]interface{}{
+	claims["userInfo"] = map[string]interface{}{
 		"userName":  userInfo.UserName,
 		"email":     userInfo.Email,
 		"firstName": userInfo.FirstName,

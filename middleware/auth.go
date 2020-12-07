@@ -46,14 +46,16 @@ func EnsureAuthentication(data *Data, w http.ResponseWriter, req *http.Request) 
 		return
 	}
 
-	if int64(token.Claims["exp"].(float64)) < time.Now().Unix() {
+	claims := token.Claims
+
+	if int64(claims.(jwt.MapClaims)["exp"].(float64)) < time.Now().Unix() {
 		err = errors.New("Token expired!")
 		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}
 
 	// protect from CSRF ###############################################################################################
-	jti := token.Claims["jti"]
+	jti := claims.(jwt.MapClaims)["jti"]
 
 	mac := hmac.New(sha256.New, []byte(secretString))
 	mac.Write([]byte(jti.(string)))
@@ -72,7 +74,7 @@ func EnsureAuthentication(data *Data, w http.ResponseWriter, req *http.Request) 
 	}
 	// #################################################################################################################
 
-	data.UserName = token.Claims["userInfo"].(map[string]interface{})["userName"].(string)
+	data.UserName = claims.(jwt.MapClaims)["userInfo"].(map[string]interface{})["userName"].(string)
 
 	return
 }

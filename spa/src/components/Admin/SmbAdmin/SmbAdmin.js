@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 class SmbShare extends Component {
     constructor(props) {
@@ -19,13 +20,13 @@ class SmbShare extends Component {
     }
 
     setShare() {
-        const { share } = this.state;
+        const {share} = this.state;
 
         this.props.setShare(share);
     }
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps.share!==this.state.share) {
+        if (nextProps.share !== this.state.share) {
             this.setState({
                 share: nextProps.share
             });
@@ -33,11 +34,11 @@ class SmbShare extends Component {
     }
 
     render() {
-        const { share } = this.state;
+        const {share} = this.state;
 
         const btnSetShare = share
-        ? <button type="button" className="btn btn-default" onClick={this.setShare}>Set share</button>
-        : null
+            ? <button type="button" className="btn btn-default" onClick={this.setShare}>Set share</button>
+            : null
         ;
 
         return (
@@ -45,7 +46,7 @@ class SmbShare extends Component {
                 <form>
                     <div className="form-group">
                         <label>Share to use for password verification</label>
-                        <input type="text" className="form-control" value={share} onChange={this.shareChanged} />
+                        <input type="text" className="form-control" value={share} onChange={this.shareChanged}/>
                     </div>
                     {btnSetShare}
                 </form>

@@ -1,8 +1,9 @@
-import React, {Component, PropTypes} from 'react';
-import { connect } from 'react-redux';
-import { goBack } from 'react-router-redux';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {goBack} from 'react-router-redux';
 
-import { changePwd } from './changePwdActions';
+import {changePwd} from './changePwdActions';
 
 // component part ######################################################################################################
 export class ChangePwd extends Component {
@@ -23,8 +24,8 @@ export class ChangePwd extends Component {
     }
 
     render() {
-        const { newPwd, newPwdConfirmed, pwd } = this.state;
-        const { waiting, err, goBack } = this.props;
+        const {newPwd, newPwdConfirmed, pwd} = this.state;
+        const {waiting, err, goBack} = this.props;
 
         let errDisplay = null;
         if (err) {
@@ -41,7 +42,7 @@ export class ChangePwd extends Component {
         const pwdMismatchWarning = pwdsMatch || (newPwd === '' && newPwdConfirmed === '')
             ? null
             : <p className="text-danger">Passwords do not match</p>
-            ;
+        ;
 
         const changePwdBtn = !pwdsMatch || pwd === '' || (newPwd === '' && newPwdConfirmed === '') ? null : (
             <div className="btn-group">
@@ -50,22 +51,28 @@ export class ChangePwd extends Component {
         );
 
         return (
-            <div className="container-fluid well" style={{ width: 400 }}>
+            <div className="container-fluid well" style={{width: 400}}>
                 <h3>Change password for user {this.props.userName}</h3>
                 <form>
                     {errDisplay}
                     {waitingNotice}
                     <div className="form-group">
                         <label>Current password</label>
-                        <input type="password" className="form-control" value={pwd} onChange={(e) => { this.setState({ pwd: e.target.value }); } } />
+                        <input type="password" className="form-control" value={pwd} onChange={(e) => {
+                            this.setState({pwd: e.target.value});
+                        }}/>
                     </div>
                     <div className="form-group">
                         <label>New password</label>
-                        <input type="password" className="form-control" value={newPwd} onChange={(e) => { this.setState({ newPwd: e.target.value }); } } />
+                        <input type="password" className="form-control" value={newPwd} onChange={(e) => {
+                            this.setState({newPwd: e.target.value});
+                        }}/>
                     </div>
                     <div className="form-group">
                         <label>Confirm new password</label>
-                        <input type="password" className="form-control" value={newPwdConfirmed} onChange={(e) => { this.setState({ newPwdConfirmed: e.target.value }); } } />
+                        <input type="password" className="form-control" value={newPwdConfirmed} onChange={(e) => {
+                            this.setState({newPwdConfirmed: e.target.value});
+                        }}/>
                     </div>
                     {pwdMismatchWarning}
                     {changePwdBtn}
@@ -95,8 +102,12 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        changePwd: (userName, currentPwd, newPwd) => { dispatch(changePwd(userName, currentPwd, newPwd)); },
-        goBack: () => { dispatch(goBack()); }
+        changePwd: (userName, currentPwd, newPwd) => {
+            dispatch(changePwd(userName, currentPwd, newPwd));
+        },
+        goBack: () => {
+            dispatch(goBack());
+        }
     };
 }
 

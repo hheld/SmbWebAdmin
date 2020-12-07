@@ -104,6 +104,8 @@ func generateToken(userInfo *user.User) ([]byte, string, error) {
 		"roles":     strings.Join(userInfo.Roles, ","),
 	}
 
+	token.Claims = claims
+
 	tokenString, err := token.SignedString([]byte(secretString))
 
 	return []byte(tokenString), clientID, err

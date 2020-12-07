@@ -1,7 +1,8 @@
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './style.css';
 
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { loginUser } from '../../auth/authActions';

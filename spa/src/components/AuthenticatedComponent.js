@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
+import React from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {push} from 'react-router-redux';
 
 export default function requiresAuth(Component, options) {
     class AuthenticatedComponent extends React.Component {
@@ -13,8 +14,8 @@ export default function requiresAuth(Component, options) {
         }
 
         _checkAndRedirect() {
-            const { redirect, user, isAuthenticating } = this.props;
-            const { redirectTo }  = options;
+            const {redirect, user, isAuthenticating} = this.props;
+            const {redirectTo} = options;
 
             if (!user && !isAuthenticating && redirectTo) {
                 redirect(redirectTo);
@@ -22,13 +23,13 @@ export default function requiresAuth(Component, options) {
         }
 
         render() {
-            const { user, isAuthenticating } = this.props;
-            const { role } = options;
-            const userHasRequiredRole = user && user.Roles.indexOf(role)!==-1;
-            
+            const {user, isAuthenticating} = this.props;
+            const {role} = options;
+            const userHasRequiredRole = user && user.Roles.indexOf(role) !== -1;
+
             return (
                 <div className="authenticated">
-                    { user && !isAuthenticating && userHasRequiredRole ? <Component {...this.props} /> : null }
+                    {user && !isAuthenticating && userHasRequiredRole ? <Component {...this.props} /> : null}
                 </div>
             );
         }
@@ -46,10 +47,12 @@ export default function requiresAuth(Component, options) {
             isAuthenticating: state.user.authenticating
         };
     };
-    
+
     const mapDispatchToProps = (dispatch) => {
         return {
-            redirect: (path) => { dispatch(push(path || '/login')); }
+            redirect: (path) => {
+                dispatch(push(path || '/login'));
+            }
         };
     };
 

@@ -1,11 +1,12 @@
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
+import React from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {push} from 'react-router-redux';
 
-import { logoutUser } from '../../auth/authActions';
-import { setVerificationShare, getVerificationShare } from './SmbAdmin/smbAdminActions';
+import {logoutUser} from '../../auth/authActions';
+import {getVerificationShare, setVerificationShare} from './SmbAdmin/smbAdminActions';
 
 import UserInfo from '../User/UserInfo';
 import Menu from './Menu/Menu';
@@ -20,21 +21,21 @@ export class AdminComponent extends React.Component {
     }
 
     render() {
-        const { user, logout, goToChangePwd, share, setShare } = this.props;
+        const {user, logout, goToChangePwd, share, setShare} = this.props;
 
         return (
             <div className='row-fluid'>
                 <div className='container-fluid col-md-2'>
-                    <UserInfo userInfo={user} logout={logout} changePwd={goToChangePwd} />
+                    <UserInfo userInfo={user} logout={logout} changePwd={goToChangePwd}/>
                     <Menu items={[
-                        { menuItem: 'Admin home', path: '/admin' },
-                        { menuItem: 'Edit users', path: '/admin/editUsers' },
-                        { menuItem: 'Add user', path: '/admin/addUser' }
-                    ]} redirect={this.props.redirect} activePath={this.props.currentRoute} />
+                        {menuItem: 'Admin home', path: '/admin'},
+                        {menuItem: 'Edit users', path: '/admin/editUsers'},
+                        {menuItem: 'Add user', path: '/admin/addUser'}
+                    ]} redirect={this.props.redirect} activePath={this.props.currentRoute}/>
                 </div>
                 <div className='container-fluid col-md-10'>
                     {this.props.children || (
-                        <SmbAdmin share={share} setShare={setShare} />
+                        <SmbAdmin share={share} setShare={setShare}/>
                     )}
                 </div>
             </div>
@@ -71,11 +72,21 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        logout: () => { dispatch(logoutUser()); },
-        redirect: (path) => { dispatch(push(path)); },
-        goToChangePwd: () => { dispatch(push('/changePwd')); },
-        setShare: (share) => { dispatch(setVerificationShare(share)); },
-        getShare: () => { dispatch(getVerificationShare()); }
+        logout: () => {
+            dispatch(logoutUser());
+        },
+        redirect: (path) => {
+            dispatch(push(path));
+        },
+        goToChangePwd: () => {
+            dispatch(push('/changePwd'));
+        },
+        setShare: (share) => {
+            dispatch(setVerificationShare(share));
+        },
+        getShare: () => {
+            dispatch(getVerificationShare());
+        }
     };
 }
 

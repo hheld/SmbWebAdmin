@@ -1,7 +1,8 @@
-import React, {Component, PropTypes} from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 
-import { getAllUsers, updateUser, deleteUser } from './editUserActions';
+import {deleteUser, getAllUsers, updateUser} from './editUserActions';
 
 import AllUsersTable from './AllUsersTable';
 import UserEditor from './UserEditor';
@@ -10,39 +11,42 @@ import UserEditor from './UserEditor';
 export class EditUsers extends Component {
     constructor(props) {
         super(props);
-        
+
         this.getAllUsers = this.props.getAllUsers.bind(this);
         this.getAllUsers();
-        
+
         this.userClicked = this.userClicked.bind(this);
         this.deleteUser = this.deleteUser.bind(this);
-        
+
         this.state = {
             currentUser: null
         };
     }
-    
+
     userClicked(user) {
         this.setState({
             currentUser: user
         });
     }
-    
+
     deleteUser(userName) {
         this.props.deleteUser(userName);
-        
+
         this.setState({
             currentUser: null
         });
     }
-    
+
     render() {
-        const usersTable = this.props.allUsers ? <AllUsersTable users={this.props.allUsers} onRowClicked={this.userClicked} /> : null;
-        const userEditor = this.state.currentUser ? <UserEditor user={this.state.currentUser} updateUser={this.props.updateUser} deleteUser={this.deleteUser} /> : null;
-        
+        const usersTable = this.props.allUsers ?
+            <AllUsersTable users={this.props.allUsers} onRowClicked={this.userClicked}/> : null;
+        const userEditor = this.state.currentUser ?
+            <UserEditor user={this.state.currentUser} updateUser={this.props.updateUser}
+                        deleteUser={this.deleteUser}/> : null;
+
         return (
             <div>
-                <button className="btn btn-default" onClick={this.getAllUsers} >Refresh user information</button>
+                <button className="btn btn-default" onClick={this.getAllUsers}>Refresh user information</button>
                 {usersTable}
                 {userEditor}
             </div>
@@ -66,9 +70,15 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getAllUsers: () => { dispatch(getAllUsers()); },
-        updateUser: (oldInfo, newInfo) => { dispatch(updateUser(oldInfo, newInfo)); },
-        deleteUser: (userName) => { dispatch(deleteUser(userName)); }
+        getAllUsers: () => {
+            dispatch(getAllUsers());
+        },
+        updateUser: (oldInfo, newInfo) => {
+            dispatch(updateUser(oldInfo, newInfo));
+        },
+        deleteUser: (userName) => {
+            dispatch(deleteUser(userName));
+        }
     };
 }
 

@@ -1,10 +1,11 @@
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './style.css';
 
-import React, {Component, PropTypes} from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 
-import { changeSmbPwd } from './smbPwdChangeActions';
+import {changeSmbPwd} from './smbPwdChangeActions';
 
 export class SmbPwdChange extends Component {
     constructor(props) {
@@ -28,32 +29,32 @@ export class SmbPwdChange extends Component {
     }
 
     changePassword() {
-        const { changePwd } = this.props;
-        const { userName, currentPwd, newPwd } = this.state;
+        const {changePwd} = this.props;
+        const {userName, currentPwd, newPwd} = this.state;
 
         changePwd(userName, currentPwd, newPwd);
     }
 
     render() {
-        const { userName, currentPwd, newPwd, newPwdConfirm } = this.state;
-        const pwdsMatch = newPwd===newPwdConfirm;
-        const { err, success } = this.props;
+        const {userName, currentPwd, newPwd, newPwdConfirm} = this.state;
+        const pwdsMatch = newPwd === newPwdConfirm;
+        const {err, success} = this.props;
 
         const pwdMismatchWarning = pwdsMatch
-        ? null
-        : <p className="text-danger">Passwords don't match!!</p>
+            ? null
+            : <p className="text-danger">Passwords don't match!!</p>
         ;
 
-        const chgPwdBtn = userName!=='' && pwdsMatch && currentPwd!=='' && newPwd!==''
-        ? <button type="button" className="btn btn-primary" onClick={this.changePassword}>Change password</button>
-        : null
+        const chgPwdBtn = userName !== '' && pwdsMatch && currentPwd !== '' && newPwd !== ''
+            ? <button type="button" className="btn btn-primary" onClick={this.changePassword}>Change password</button>
+            : null
         ;
 
         const errMsg = err && !success
-        ? <h3 className="text-danger">{err}</h3>
-        : err && success 
-        ? <h3 className="text-success">{err}</h3>
-        : null
+            ? <h3 className="text-danger">{err}</h3>
+            : err && success
+                ? <h3 className="text-success">{err}</h3>
+                : null
         ;
 
         return (
@@ -62,19 +63,31 @@ export class SmbPwdChange extends Component {
                 <form>
                     <div className="form-group">
                         <label>User name</label>
-                        <input type="text" className="form-control" placeholder="User name" value={userName} onChange={(e) => {this.onChange('userName', e.target.value);} } />
+                        <input type="text" className="form-control" placeholder="User name" value={userName}
+                               onChange={(e) => {
+                                   this.onChange('userName', e.target.value);
+                               }}/>
                     </div>
                     <div className="form-group">
                         <label>Current password</label>
-                        <input type="password" className="form-control" placeholder="Current password" value={currentPwd} onChange={(e) => {this.onChange('currentPwd', e.target.value);} } />
+                        <input type="password" className="form-control" placeholder="Current password"
+                               value={currentPwd} onChange={(e) => {
+                            this.onChange('currentPwd', e.target.value);
+                        }}/>
                     </div>
                     <div className="form-group">
                         <label>New password</label>
-                        <input type="password" className="form-control" placeholder="New password" value={newPwd} onChange={(e) => {this.onChange('newPwd', e.target.value);} } />
+                        <input type="password" className="form-control" placeholder="New password" value={newPwd}
+                               onChange={(e) => {
+                                   this.onChange('newPwd', e.target.value);
+                               }}/>
                     </div>
                     <div className="form-group">
                         <label>Retype new password</label>
-                        <input type="password" className="form-control" placeholder="Retype new password" value={newPwdConfirm} onChange={(e) => {this.onChange('newPwdConfirm', e.target.value);} } />
+                        <input type="password" className="form-control" placeholder="Retype new password"
+                               value={newPwdConfirm} onChange={(e) => {
+                            this.onChange('newPwdConfirm', e.target.value);
+                        }}/>
                     </div>
                     {chgPwdBtn}
                     {pwdMismatchWarning}
@@ -101,7 +114,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        changePwd: (userName, currentPwd, newPwd) => { dispatch(changeSmbPwd(userName, currentPwd, newPwd)); }
+        changePwd: (userName, currentPwd, newPwd) => {
+            dispatch(changeSmbPwd(userName, currentPwd, newPwd));
+        }
     };
 }
 

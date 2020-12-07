@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Administration of a Samba server from a web application.",
   "scripts": {
-    "dev": "DEBUG=true webpack -w",
+    "dev": "DEBUG=true webpack -w --mode='development'",
     "prod": "webpack --mode='production'"
   },
   "author": "Harald Held",
@@ -24,10 +24,13 @@
   },
   "dependencies": {
     "bootstrap": "^4.5.3",
+    "history": "^5.0.0",
+    "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.2",
     "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
     "react-router-redux": "^4.0.8",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
